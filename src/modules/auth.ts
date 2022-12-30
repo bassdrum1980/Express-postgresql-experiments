@@ -1,14 +1,15 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-export const comparePassword = (password, hash) => {
+export const comparePasswords = (password: string, hash: string) => {
   // returns promise
-  return bcrypt.compare(password, hash);
+  return bcrypt.compare(password + process.env.BCRYPT_PEPPER, hash);
 };
 
-export const hashPassword = (password) => {
+export const hashPassword = (password: string) => {
   // returns promise
-  return bcrypt.hash(password, process.env.BCRYPT_SALT);
+  // 10 —> saltRounds
+  return bcrypt.hash(password + process.env.BCRYPT_PEPPER, 10);
 };
 
 export const createJWT = (user) => {

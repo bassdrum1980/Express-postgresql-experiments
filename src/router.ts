@@ -1,33 +1,35 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import { handleInputErrors } from './modules/middleware';
+import {
+  getProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from './handlers/product';
 
 const router = Router();
 
 /**
  * Product
  */
-router.get('/product', (req, res) => {
-  res.json({ message: req.secret });
-});
+router.get('/product', getProducts);
 router.get('/product/:id', (req, res) => {});
 router.post(
   '/product',
   body('name').isString(),
   handleInputErrors,
-  (req, res) => {}
+  createProduct
 );
 
 router.put(
   '/product/:id',
   body('name').isString(),
   handleInputErrors,
-  (req, res) => {
-    res.json({ message: 'affirmative' });
-  }
+  updateProduct
 );
 
-router.delete('/product/:id', (req, res) => {});
+router.delete('/product/:id', deleteProduct);
 
 /**
  * Update

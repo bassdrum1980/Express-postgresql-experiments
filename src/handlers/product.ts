@@ -18,14 +18,22 @@ export const getProducts = async (req, res) => {
 export const getOneProduct = async (req, res) => {
   const productId = req.params.id;
   const userId = req.user.id;
-  const product = await prisma.product.findFirst({
+  const product = await prisma.product.findUnique({
     where: {
-      id: productId,
-      belongsTo: userId,
+      id_belongsToId: {
+        id: productId,
+        belongsToId: userId,
+      },
     },
   });
 
-  res.json({ data: product });
+  const updates = await prisma.update.findMany({
+    where: {
+      productId,
+    },
+  });
+
+  res.json({ data: product, updates });
 };
 
 // Create Product

@@ -3,10 +3,12 @@ import { body } from 'express-validator';
 import { handleInputErrors } from './modules/middleware';
 import {
   getProducts,
+  getOneProduct,
   createProduct,
   updateProduct,
   deleteProduct,
 } from './handlers/product';
+import { getUpdates, createUpdate } from './handlers/update';
 
 const router = Router();
 
@@ -14,7 +16,7 @@ const router = Router();
  * Product
  */
 router.get('/product', getProducts);
-router.get('/product/:id', (req, res) => {});
+router.get('/product/:id', getOneProduct);
 router.post(
   '/product',
   body('name').isString(),
@@ -34,7 +36,7 @@ router.delete('/product/:id', deleteProduct);
 /**
  * Update
  */
-router.get('/update', (req, res) => {});
+router.get('/update', getUpdates);
 router.get('/update/:id', (req, res) => {});
 router.post(
   '/update',
@@ -42,7 +44,7 @@ router.post(
   body('body').exists().isString(),
   body('productId').exists().isString(),
   handleInputErrors,
-  (req, res) => {}
+  createUpdate
 );
 router.put(
   '/update/:id',

@@ -8,7 +8,7 @@ import {
   updateProduct,
   deleteProduct,
 } from './handlers/product';
-import { getUpdates, createUpdate } from './handlers/update';
+import { getUpdates, createUpdate, getUpdate } from './handlers/update';
 
 const router = Router();
 
@@ -37,7 +37,7 @@ router.delete('/product/:id', deleteProduct);
  * Update
  */
 router.get('/update', getUpdates);
-router.get('/update/:id', (req, res) => {});
+router.get('/update/:id', getUpdate);
 router.post(
   '/update',
   body('title').exists().isString(),
